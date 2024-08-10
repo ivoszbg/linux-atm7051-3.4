@@ -1,0 +1,25 @@
+README: To describe how to compile the exFAT as standalone module
+==============================================================
+1.	Get Kernel code of your Samsung Product in OSRC website. (http://opensource.samsung.com/)
+
+2. 	Run "cd VDLinux_3.0.20/linux-3.0.20/"
+
+3.	Create the exfat directory exfat in kernel/fs/ location.
+	Run "mkdir VDLinux_3.0.20/linux-3.0.20/fs/exfat"
+
+4.	Copy the exfat code in kernel/fs/exfat/ location.	
+	Run  "cp -ar exfat_1.1.11p1/* VDLinux_3.0.20/linux-3.0.20/fs/exfat/"
+
+5.	vi kernel/fs/Makefile and add entry for exfat
+        ex)
+           obj-$(CONFIG_MINIX_FS) += minix/
+           obj-$(CONFIG_FAT_FS)   += fat/  
+           obj-$(CONFIG_EXFAT_FS) += exfat/
+
+6.	vi kernel/fs/Kconfig and add entry for exfat
+        ex)
+           menu "DOS/FAT/NT/EXFAT Filesystems"
+           source "fs/fat/Kconfig"            
+           source "fs/exfat/Kconfig"          
+
+7.	execute command to make for your Kernel(see readme.txt in 13_[module name].zip->readme.zip)

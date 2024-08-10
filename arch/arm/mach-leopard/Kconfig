@@ -1,0 +1,131 @@
+comment "Leopard configurations"
+	depends on ARCH_LEOPARD
+
+comment "Leopard Board Type"
+	depends on ARCH_LEOPARD
+
+config MACH_LEOPARD_FPGA
+	bool "Actions Leopard FPGA board"
+	depends on ARCH_LEOPARD
+
+config MACH_LEOPARD_EVB
+	bool "Actions Leopard EVB board"
+	depends on ARCH_LEOPARD
+
+config SERIAL_ASOC
+	bool "Enable Actions SoCs' UART Support"
+	depends on ARCH_LEOPARD
+	select SERIAL_CORE
+	help
+	  If you have a ARM-based Actions SoC
+	  and you want to use serial ports, say Y.  Otherwise, say N.
+
+config SERIAL_ASOC_CONSOLE
+	bool "Enable Actions SoCs serial console"
+	depends on SERIAL_ASOC
+	select SERIAL_CORE_CONSOLE
+	help
+	  If you have a ARM-based  Actions SoC
+	  and you want to use serial console, say Y. Otherwise, say N.
+
+config GPU_RESERVED_SIZE
+    int "Reserved memory for GPU (Mbytes)"
+	default "64"
+	depends on ARCH_LEOPARD
+	help
+	  The default reserver value is 32M RAM. Change this if you know what you
+	  are doing.
+
+config ION_RESERVED_SIZE
+    int "Reserved memory for ION (Mbytes)"
+	default "64"
+	depends on ION || ION_ASOC
+	help
+	  The default reserver value is 64M RAM. Change this if you know what you
+	  are doing.
+
+config FB_RESERVED_SIZE
+    int "Reserved memory for Framebuffer (Mbytes)"
+	default "32"
+	depends on ARCH_LEOPARD
+	help
+	  The default reserver value is 32M RAM. Change this if you know what you
+	  are doing.
+
+config I2C_ASOC
+	tristate "Actions Actions SOC I2C"
+	depends on ARCH_LEOPARD
+	help
+	  Enable the use of the I2C bus controllers on the Actions SOC Verify
+	  If you don't know what to do here, say N.
+
+config I2C_ASOC_BUS0
+	tristate "Actions SOC I2C0"
+	depends on I2C_ASOC
+	help
+	  Enable the use of the I2C bus 0 controllers on the Actions SOC Verify
+	  If you don't know what to do here, say N.
+
+config I2C_ASOC_BUS1
+	tristate "Actions SOC I2C1"
+	depends on I2C_ASOC
+	help
+	  Enable the use of the I2C bus 1 controllers on the Actions SOC Verify
+	  If you don't know what to do here, say N.
+
+config I2C_ASOC_BUS2
+	tristate "Actions SOC I2C2"
+	depends on I2C_ASOC
+	help
+	  Enable the use of the I2C bus 1 controllers on the Actions SOC Verify
+	  If you don't know what to do here, say N.	   
+
+config SPI_ASOC
+	tristate "Actions SOC SPI controller"
+	depends on SPI_MASTER
+	help
+	  SPI driver for Actions SOC
+
+config MFD_ATC260X
+	tristate "Actions atc260x multifunctions device"
+	depends on SPI_ASOC
+	select MFD_CORE
+	help
+	  SPI driver for Actions SOC
+
+config PINCTRL_ASOC
+	bool "Actions SOC pin controller driver"
+	depends on ARCH_LEOPARD
+	select PINCTRL
+	select PINMUX
+	select PINCONF
+	help
+	  Pin controller driver for Actions SOC
+	
+config ACTIONS_SOC_CAMERA
+	tristate "SoC camera support"
+	depends on VIDEO_V4L2 && HAS_DMA && I2C
+	select VIDEOBUF_GEN
+	select VIDEOBUF2_CORE
+	help
+	  SoC Camera is a common API to several cameras, not connecting
+	  over a bus like PCI or USB. For example some i2c camera connected
+	  directly to the data bus of an SoC. 
+	  
+config FB_ACTIONS
+	tristate "Actions framebuffer support"
+	depends on FB
+	select FB_CFB_FILLRECT
+	select FB_CFB_COPYAREA
+	select FB_CFB_IMAGEBLIT
+	---help---
+	This enables support for the ACTIONS framebuffer in the kernel .
+	
+config BACKLIGHT_ACTIONS
+	tristate "Actions backlight"
+	select BACKLIGHT_CLASS_DEVICE
+	select ACT_BACKLIGHT
+  ---help---
+	This enables support for the ACTIONS backlight in the kernel .
+
+

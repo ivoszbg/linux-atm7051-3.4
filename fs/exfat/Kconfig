@@ -1,0 +1,7 @@
+config EXFAT_FS
+	tristate "exfat support"
+	select NLS
+	default y
+	help
+	  This enables the exfat filesystem support in Kernel.
+	  To compile this as a module, choose M here.
